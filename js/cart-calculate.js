@@ -9,59 +9,52 @@ function getValue(inputValue, isIncreasing) {
         const input = parseInt(inputNumber) - 1;
         inputField.value = input;
     }
+    return inputNumber;
 };
 
 // get user balance info
 function updateBalance(product, price) {
     const priceInput = document.getElementById(product + '-price');
     const getInput = document.getElementById(product + '-quantity').value;
-    const totalBalance = getInput * price;
-    priceInput.innerText = totalBalance;
+    const totalInputBalance = getInput * price;
+    priceInput.innerText = totalInputBalance;
+    totalBalance();
 }
 
 // get total balance
 function totalBalance() {
-    const phonePrice = getValue('phone') * 1219;
-    const casePrice = getValue('case') * 59;
+    const phonePrice = getValue('phone-quantity') * 1219;
+    const casePrice = getValue('case-quantity') * 59;
+    const subTotal = parseFloat(phonePrice) + parseFloat(casePrice);
+    const tax = subTotal / 10;
+    const total = subTotal + tax;
 
-    const subTotal = document.getElementById('subtotal-balance');
-    const tax = document.getElementById('tax-balance');
-    const total = document.getElementById('total-balance');
-
-    subTotal = phonePrice + casePrice;
-    const subTotalAmount = subTotal.innerText;
-    tax = subTotalAmount / 10;
-    const taxAmount = tax.innerText
-    total.innerText = subTotalAmount + taxAmount;
-
-
+    document.getElementById('tax-balance').innerText = tax;
+    document.getElementById('subtotal-balance').innerText = subTotal;
+    document.getElementById('total-balance').innerText = total;
 }
 
 // phone handler
 const phonePlus = document.getElementById('phone-plus');
 phonePlus.addEventListener('click', function() {
-    const getInputValue = getValue('phone-quantity', true);
+    getValue('phone-quantity', true);
     updateBalance('phone', 1219);
-    totalBalance();
 });
 
 const phoneMinus = document.getElementById('phone-minus');
 phoneMinus.addEventListener('click', function() {
-    const getInputValue = getValue('phone-quantity', false);
+    getValue('phone-quantity', false);
     updateBalance('phone', 1219);
-    totalBalance();
 });
 
 // case handler
 const casePlus = document.getElementById('case-plus');
 casePlus.addEventListener('click', function() {
-    const getInputValue = getValue('case-quantity', true);
+    getValue('case-quantity', true);
     updateBalance('case', 59);
-    totalBalance();
 });
 const caseMinus = document.getElementById('case-minus');
 caseMinus.addEventListener('click', function() {
-    const getInputValue = getValue('case-quantity', false);
+    getValue('case-quantity', false);
     updateBalance('case', 59);
-    totalBalance();
 });
